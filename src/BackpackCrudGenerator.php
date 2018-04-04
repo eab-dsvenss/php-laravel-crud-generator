@@ -15,13 +15,9 @@ use se\eab\php\laravel\crudgenerator\controller\ControllerHandler;
 use se\eab\php\laravel\crudgenerator\model\ModelHandler;
 use se\eab\php\laravel\crudgenerator\route\RouteHandler;
 
-class BackpackCrudGenerator
+class BackpackCrudGenerator extends CrudGenerator
 {
     private static $instance;
-
-    const COMMONCLASS_FILENAME = "EABCrudCommon";
-    const CRUD_QUALIFIER = "crud";
-
 
     /**
      * @var ClassTailor

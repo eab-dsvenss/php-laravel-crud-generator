@@ -13,6 +13,7 @@ use Illuminate\Console\Command;
 use Artisan;
 use se\eab\php\classtailor\factory\ClassFileFactory;
 use se\eab\php\classtailor\model\ClassFile;
+use se\eab\php\laravel\crudgenerator\BackpackCrudGenerator;
 use se\eab\php\laravel\crudgenerator\CrudGenerator;
 use se\eab\php\laravel\modelgenerator\config\ModelGeneratorConfigHelper;
 use se\eab\php\laravel\modelgenerator\ModelGenerator;
@@ -28,10 +29,11 @@ class InstallCommand extends Command
         parent::__construct();
     }
 
-    public function handle() {
+    public function handle()
+    {
         Artisan::call("eab-modelgenerator:install");
 
-        switch($this->option('type')) {
+        switch ($this->option('type')) {
             case "backpack":
                 $this->installBackpack();
                 break;
@@ -41,16 +43,28 @@ class InstallCommand extends Command
         }
     }
 
-    private function installBackpack() {
+    private function installBackpack()
+    {
         Artisan::call("eab-modelgenerator:install");
         Artisan::call("backpack:base:install");
         Artisan::call("backpack:crud:install");
+        Artisan::call("vendor:publish", ["--provider" => "Spatie\\Translatable\\TranslatableServiceProvider\\"]);
 
         $baseclassadjustments = [
-            ClassFileFactory::CLASSNAME_KEY => CrudGenerator::COMMONCLASS_FILENAME,
-            ClassFileFactory::TRAITS_KEY => [[ClassFileFactory::NAME_KEY => "CrudTrait", ClassFileFactory::DEPENDENCY_KEY => "Backpack\\CRUD\\CrudTrait"]]
+            ClassFileFactory::TRAITS_KEY => [
+                [ClassFileFactory::NAME_KEY => "CrudTrait", ClassFileFactory::DEPENDENCY_KEY => "Backpack\\CRUD\\CrudTrait"],
+            ]
         ];
 
-        ModelGeneratorConfigHelper::getInstance()->saveExtraModelAdjustmentsToFile($baseclassadjustments, CrudGenerator::CRUD_QUALIFIER);
+        $translatableadjustements = [
+            ClassFileFactory::TRAITS_KEY => [
+                [ClassFileFactory::NAME_KEY => "HasTranslations", ClassFileFactory::DEPENDENCY_KEY => "Spatie\\Translatable\\HasTranslations"],
+            ]
+        ];
+
+
+        ModelGeneratorConfigHelper::getInstance()->saveExtraModelAdjustmentsToFile($baseclassadjustments, BackpackCrudGenerator::CRUD_QUALIFIER);
+        ModelGeneratorConfigHelper::getInstance()->saveExtraModelAdjustmentsToFile($translatableadjustements, BackpackCrudGenerator::TRANSLATABLE_QUALIFIER);
+
     }
 }
