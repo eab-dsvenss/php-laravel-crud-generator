@@ -12,11 +12,8 @@ namespace se\eab\php\laravel\crudgenerator\command;
 use Illuminate\Console\Command;
 use Artisan;
 use se\eab\php\classtailor\factory\ClassFileFactory;
-use se\eab\php\classtailor\model\ClassFile;
 use se\eab\php\laravel\crudgenerator\BackpackCrudGenerator;
-use se\eab\php\laravel\crudgenerator\CrudGenerator;
 use se\eab\php\laravel\modelgenerator\config\ModelGeneratorConfigHelper;
-use se\eab\php\laravel\modelgenerator\ModelGenerator;
 
 class InstallCommand extends Command
 {
