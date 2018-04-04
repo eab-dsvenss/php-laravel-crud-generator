@@ -28,7 +28,7 @@ class InstallCommand extends Command
 
     public function handle()
     {
-        Artisan::call("eab-modelgenerator:install");
+        $this->call("eab-modelgenerator:install");
 
         switch ($this->option('type')) {
             case "backpack":
@@ -42,10 +42,10 @@ class InstallCommand extends Command
 
     private function installBackpack()
     {
-        Artisan::call("eab-modelgenerator:install");
-        Artisan::call("backpack:base:install");
-        Artisan::call("backpack:crud:install");
-        Artisan::call("vendor:publish", ["--provider" => "Spatie\\Translatable\\TranslatableServiceProvider\\"]);
+        $this->call("eab-modelgenerator:install");
+        $this->call("backpack:base:install");
+        $this->call("backpack:crud:install");
+        $this->call("vendor:publish", ["--provider" => "Spatie\\Translatable\\TranslatableServiceProvider\\"]);
 
         $baseclassadjustments = [
             ClassFileFactory::TRAITS_KEY => [

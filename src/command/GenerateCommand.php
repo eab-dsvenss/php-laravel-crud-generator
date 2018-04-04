@@ -40,7 +40,7 @@ class GenerateCommand extends Command
 
     private function generateBackpack()
     {
-        Artisan::call("eab-modelgenerator:generate");
+        $this->call("eab-modelgenerator:generate");
         $crudgen = BackpackCrudGenerator::getInstance();
 
         foreach (ModelGeneratorConfigHelper::getInstance()->getModels() as $model) {
