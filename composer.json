@@ -15,7 +15,7 @@
       }
   },
   "require": {
-    "laravel/laravel": "^5.5",
+    "laravel/framework": "^5.5",
     "eab-dsvenss/php-laravel-model-generator": "dev-master",
     "backpack/base": "^0.9.2",
     "backpack/crud": "^3.4",
