@@ -8,6 +8,7 @@
 
 namespace se\eab\php\laravel\crudgenerator\model;
 
+use Log;
 
 class ModelHandler
 {

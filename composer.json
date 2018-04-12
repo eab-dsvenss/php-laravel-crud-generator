@@ -15,6 +15,7 @@
       }
   },
   "require": {
+    "php": "^7.0",
     "laravel/framework": "5.5.*",
     "eab-dsvenss/php-laravel-model-generator": "dev-master",
     "backpack/base": "^0.9.2",
@@ -23,6 +24,7 @@
     "spatie/laravel-translatable": "^2.2"
   },
   "require-dev": {
-    "codeception/codeception": "^2.4"
+    "codeception/codeception": "^2.4",
+    "codeception/aspect-mock": "^3.0"
   }
 }

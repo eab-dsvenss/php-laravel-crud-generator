@@ -20,7 +20,7 @@ class RouteHandler
 
     private function __construct()
     {
-        $this->routesfile = "routes/admin.php";
+        $this->routesfile = app_path("routes/admin.php");
     }
 
     public static function getInstance()

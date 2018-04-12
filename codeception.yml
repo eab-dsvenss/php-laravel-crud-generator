@@ -5,6 +5,8 @@ paths:
     support: tests/_support
     envs: tests/_envs
 actor_suffix: Tester
+settings:
+  bootstrap: _bootstrap.php # this file needs to be inside each test type folder
 extensions:
     enabled:
         - Codeception\Extension\RunFailed

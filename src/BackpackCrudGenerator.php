@@ -9,22 +9,16 @@
 namespace se\eab\php\laravel\crudgenerator;
 
 use Artisan;
-use Log;
-use se\eab\php\classtailor\ClassTailor;
 use se\eab\php\laravel\crudgenerator\controller\ControllerHandler;
 use se\eab\php\laravel\crudgenerator\model\ModelHandler;
 use se\eab\php\laravel\crudgenerator\route\RouteHandler;
+use se\eab\php\laravel\modelgenerator\config\ModelGeneratorConfigHelper;
 
 class BackpackCrudGenerator extends CrudGenerator
 {
     private static $instance;
 
-    /**
-     * @var ClassTailor
-     */
-    private $classtailor;
-
-    private function __contstruct()
+    private function __construct()
     {
 
     }
@@ -41,10 +35,20 @@ class BackpackCrudGenerator extends CrudGenerator
         return self::$instance;
     }
 
-    public function generateCRUDforModel(array $model)
+    public function generateModelCRUDs()
     {
-        $name = $model['name'];
-        $namespace = $model['namespace'];
+        $namespace = ModelGeneratorConfigHelper::getInstance()->getNamespace();
+
+        foreach (ModelGeneratorConfigHelper::getInstance()->getModels() as $model) {
+            if (ModelGeneratorConfigHelper::getInstance()->hasExtrasQualifier($model, CrudGenerator::CRUD_QUALIFIER)) {
+                $this->generateCRUDforModel($model, $namespace);
+            }
+        }
+    }
+
+    public function generateCRUDforModel(array $model, $namespace)
+    {
+        $name = $model[ModelGeneratorConfigHelper::MODELNAME_KEY];
         Artisan::call("backpack:crud", ["name" => $name]);
         $this->removeDefaultGeneratedModel($name);
         $this->adjustCrudController($name, $namespace);

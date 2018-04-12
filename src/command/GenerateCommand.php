@@ -11,7 +11,6 @@ namespace se\eab\php\laravel\crudgenerator\command;
 
 use Illuminate\Console\Command;
 use se\eab\php\laravel\crudgenerator\BackpackCrudGenerator;
-use se\eab\php\laravel\modelgenerator\config\ModelGeneratorConfigHelper;
 
 class GenerateCommand extends Command
 {
@@ -43,8 +42,6 @@ class GenerateCommand extends Command
         $this->call("eab-modelgenerator:generate");
         $crudgen = BackpackCrudGenerator::getInstance();
 
-        foreach (ModelGeneratorConfigHelper::getInstance()->getModels() as $model) {
-            $crudgen->generateCRUDforModel($model);
-        }
+        $crudgen->generateModelCRUDs();
     }
 }
