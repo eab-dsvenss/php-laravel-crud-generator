@@ -9,7 +9,7 @@ use App\Http\Requests\TestModelCrudRequest as UpdateRequest;
 class TestModelCrudController extends CrudController {
 
     public function setup() {
-        $this->crud->setModel('namespace\TestModel');
+        $this->crud->setModel('App\Models\TestModel');
         $this->crud->setRoute(config('backpack.base.route_prefix')  . '/testmodel');
         $this->crud->setEntityNameStrings('testmodel', 'testmodels');
 

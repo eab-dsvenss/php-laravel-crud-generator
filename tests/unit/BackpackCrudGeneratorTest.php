@@ -74,30 +74,41 @@ class BackpackCrudGeneratorTest extends \Codeception\Test\Unit
     protected function setupTestData()
     {
         copy(codecept_data_dir("TestModel_COPY.php"), codecept_data_dir("TestModel.php"));
+        copy(codecept_data_dir("TestModelCrudController_COPY.php"), codecept_data_dir("TestModelCrudController.php"));
         copy(codecept_data_dir("route_COPY.php"), codecept_data_dir("route.php"));
 
         $this->namespace = "namespace";
-        $this->model = [ModelGeneratorConfigHelper::MODELNAME_KEY => "TestModel", ModelGeneratorConfigHelper::MODELTABLE_KEY => "modeltable", ModelGeneratorConfigHelper::MODELEXTRAS_KEY => [CrudGenerator::CRUD_QUALIFIER]];
+        $this->model = [
+            ModelGeneratorConfigHelper::MODELNAME_KEY => "TestModel",
+            ModelGeneratorConfigHelper::MODELTABLE_KEY => "modeltable",
+            ModelGeneratorConfigHelper::MODELEXTRAS_KEY => [
+                CrudGenerator::CRUD_QUALIFIER
+            ]
+        ];
     }
 
     /**
      * @throws Exception
      */
-    public function testGenerateCRUDforModel()
+    public function testGenerateCrudForModel()
     {
         $this->setupSingleModelMock();
         $bpgen = BackpackCrudGenerator::getInstance();
-        $bpgen->generateCRUDforModel($this->model, $this->namespace);
+        $bpgen->generateCrudForModel($this->model, $this->namespace);
+
+        // TODO verify no model file
+        // TODO verify controller has been adjusted
+        // TODO verify routes
     }
 
     /**
      * @throws Exception
      */
-    public function testGenerateModelCRUDs()
+    /*public function testGenerateModelCruds()
     {
-        $this->setupMultipleModelsMock();
-        $bpgen = BackpackCrudGenerator::getInstance();
+        //$this->setupMultipleModelsMock();
+        //$bpgen = BackpackCrudGenerator::getInstance();
         //$bpgen->generateModelCRUDs();
 
-    }
+    }*/
 }

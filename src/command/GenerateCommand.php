@@ -42,6 +42,6 @@ class GenerateCommand extends Command
         $this->call("eab-modelgenerator:generate");
         $crudgen = BackpackCrudGenerator::getInstance();
 
-        $crudgen->generateModelCRUDs();
+        $crudgen->generateModelCruds();
     }
 }

@@ -38,7 +38,7 @@ class ControllerHandler
         $classfile = ClassFileFactory::getInstance()->createClassfileFromArray([
             ClassFileFactory::PATH_KEY => $this->ctrlpath . DIRECTORY_SEPARATOR . $name . self::CONTROLLER_BASENAME . ".php",
             ClassFileFactory::REPLACEABLES_KEY => [
-                [ClassFileFactory::PATTERN_KEY => "App\\Models\\$name", ClassFileFactory::REPLACEMENT_KEY => $namespace . "\\$name"]
+                [ClassFileFactory::PATTERN_KEY => "App\\\\Models\\\\$name", ClassFileFactory::REPLACEMENT_KEY => $namespace . "\\\\$name"]
             ]
         ]);
         $this->classtailor->tailorClass($classfile);

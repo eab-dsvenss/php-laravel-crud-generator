@@ -14,7 +14,7 @@ abstract class CrudGenerator
     const CRUD_QUALIFIER = "crud";
     const TRANSLATABLE_QUALIFIER = "translatable";
 
-    abstract function generateModelCRUDs();
+    abstract function generateModelCruds();
 
-    abstract function generateCRUDforModel(array $model, $namespace);
+    abstract function generateCrudForModel(array $model, $namespace);
 }

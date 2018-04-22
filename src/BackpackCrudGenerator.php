@@ -35,18 +35,18 @@ class BackpackCrudGenerator extends CrudGenerator
         return self::$instance;
     }
 
-    public function generateModelCRUDs()
+    public function generateModelCruds()
     {
         $namespace = ModelGeneratorConfigHelper::getInstance()->getNamespace();
 
         foreach (ModelGeneratorConfigHelper::getInstance()->getModels() as $model) {
             if (ModelGeneratorConfigHelper::getInstance()->hasExtrasQualifier($model, CrudGenerator::CRUD_QUALIFIER)) {
-                $this->generateCRUDforModel($model, $namespace);
+                $this->generateCrudForModel($model, $namespace);
             }
         }
     }
 
-    public function generateCRUDforModel(array $model, $namespace)
+    public function generateCrudForModel(array $model, $namespace)
     {
         $name = $model[ModelGeneratorConfigHelper::MODELNAME_KEY];
         Artisan::call("backpack:crud", ["name" => $name]);
