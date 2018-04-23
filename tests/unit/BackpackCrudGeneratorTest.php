@@ -22,6 +22,8 @@ class BackpackCrudGeneratorTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
+    private $modelName = "TestModel";
+    private $routefilename = "route";
     private $model;
     private $namespace;
 
@@ -73,13 +75,13 @@ class BackpackCrudGeneratorTest extends \Codeception\Test\Unit
 
     protected function setupTestData()
     {
-        copy(codecept_data_dir("TestModel_COPY.php"), codecept_data_dir("TestModel.php"));
-        copy(codecept_data_dir("TestModelCrudController_COPY.php"), codecept_data_dir("TestModelCrudController.php"));
-        copy(codecept_data_dir("route_COPY.php"), codecept_data_dir("route.php"));
+        copy(codecept_data_dir($this->modelName . "_COPY.php"), codecept_data_dir($this->modelName . ".php"));
+        copy(codecept_data_dir($this->modelName . "CrudController_COPY.php"), codecept_data_dir($this->modelName . "CrudController.php"));
+        copy(codecept_data_dir($this->routefilename . "_COPY.php"), codecept_data_dir($this->routefilename . ".php"));
 
         $this->namespace = "namespace";
         $this->model = [
-            ModelGeneratorConfigHelper::MODELNAME_KEY => "TestModel",
+            ModelGeneratorConfigHelper::MODELNAME_KEY => $this->modelName,
             ModelGeneratorConfigHelper::MODELTABLE_KEY => "modeltable",
             ModelGeneratorConfigHelper::MODELEXTRAS_KEY => [
                 CrudGenerator::CRUD_QUALIFIER
@@ -92,13 +94,18 @@ class BackpackCrudGeneratorTest extends \Codeception\Test\Unit
      */
     public function testGenerateCrudForModel()
     {
+        $this->assertTrue(file_exists(codecept_data_dir($this->modelName . ".php")));
+
         $this->setupSingleModelMock();
         $bpgen = BackpackCrudGenerator::getInstance();
         $bpgen->generateCrudForModel($this->model, $this->namespace);
 
-        // TODO verify no model file
-        // TODO verify controller has been adjusted
-        // TODO verify routes
+        $this->assertFalse(file_exists(codecept_data_dir($this->modelName . ".php")));
+        $controllercontent = file_get_contents(codecept_data_dir($this->modelName . "CrudController.php"));
+        $this->assertFalse(strpos($controllercontent, "App\\Models\\" . $this->modelName));
+        $this->assertTrue(strpos($controllercontent, $this->namespace . "\\" . $this->modelName) != FALSE);
+        $routecontent = file_get_contents(codecept_data_dir($this->routefilename . ".php"));
+        $this->assertTrue(strpos($routecontent, "CRUD::resource('" . strtolower($this->modelName) . "', '" . $this->modelName . "CrudController');") != FALSE);
     }
 
     /**
